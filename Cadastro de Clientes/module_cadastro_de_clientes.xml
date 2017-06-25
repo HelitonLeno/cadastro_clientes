@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_cadastro_de_clientes" default="compile.module.cadastro_de_clientes">
+  <dirname property="module.cadastro_de_clientes.basedir" file="${ant.file.module_cadastro_de_clientes}"/>
+  
+  <property name="module.jdk.home.cadastro_de_clientes" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.cadastro_de_clientes" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.cadastro_de_clientes" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.cadastro_de_clientes" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="cadastro_de_clientes.output.dir" value="${module.cadastro_de_clientes.basedir}/out/production/Cadastro de Clientes"/>
+  <property name="cadastro_de_clientes.testoutput.dir" value="${module.cadastro_de_clientes.basedir}/out/test/Cadastro de Clientes"/>
+  
+  <path id="cadastro_de_clientes.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="cadastro_de_clientes.module.production.classpath">
+    <path refid="${module.jdk.classpath.cadastro_de_clientes}"/>
+  </path>
+  
+  <path id="cadastro_de_clientes.runtime.production.module.classpath">
+    <pathelement location="${cadastro_de_clientes.output.dir}"/>
+  </path>
+  
+  <path id="cadastro_de_clientes.module.classpath">
+    <path refid="${module.jdk.classpath.cadastro_de_clientes}"/>
+    <pathelement location="${cadastro_de_clientes.output.dir}"/>
+  </path>
+  
+  <path id="cadastro_de_clientes.runtime.module.classpath">
+    <pathelement location="${cadastro_de_clientes.testoutput.dir}"/>
+    <pathelement location="${cadastro_de_clientes.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.cadastro_de_clientes">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.cadastro_de_clientes">
+    <patternset refid="excluded.from.module.cadastro_de_clientes"/>
+  </patternset>
+  
+  <path id="cadastro_de_clientes.module.sourcepath">
+    <dirset dir="${module.cadastro_de_clientes.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.cadastro_de_clientes" depends="compile.module.cadastro_de_clientes.production,compile.module.cadastro_de_clientes.tests" description="Compile module Cadastro de Clientes"/>
+  
+  <target name="compile.module.cadastro_de_clientes.production" depends="register.custom.compilers" description="Compile module Cadastro de Clientes; production classes">
+    <mkdir dir="${cadastro_de_clientes.output.dir}"/>
+    <javac2 destdir="${cadastro_de_clientes.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.cadastro_de_clientes}/javac">
+      <compilerarg line="${compiler.args.cadastro_de_clientes}"/>
+      <bootclasspath refid="cadastro_de_clientes.module.bootclasspath"/>
+      <classpath refid="cadastro_de_clientes.module.production.classpath"/>
+      <src refid="cadastro_de_clientes.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.cadastro_de_clientes"/>
+    </javac2>
+    
+    <copy todir="${cadastro_de_clientes.output.dir}">
+      <fileset dir="${module.cadastro_de_clientes.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.cadastro_de_clientes.tests" depends="register.custom.compilers,compile.module.cadastro_de_clientes.production" description="compile module Cadastro de Clientes; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.cadastro_de_clientes" description="cleanup module">
+    <delete dir="${cadastro_de_clientes.output.dir}"/>
+    <delete dir="${cadastro_de_clientes.testoutput.dir}"/>
+  </target>
+</project>
